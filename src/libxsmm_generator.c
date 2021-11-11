@@ -226,24 +226,24 @@ LIBXSMM_API libxsmm_gemm_descriptor* libxsmm_gemm_descriptor_init(libxsmm_descri
   libxsmm_blasint lda, libxsmm_blasint ldb, libxsmm_blasint ldc, const void* alpha, const void* beta,
   int flags, int prefetch)
 {
-  return libxsmm_gemm_descriptor_init2(blob, precision, precision, m, n, k, lda, ldb, ldc, alpha, beta, flags, prefetch);
+  return libxsmm_gemm_descriptor_init2(blob, precision, precision, m, n, k, lda, ldb, ldc, alpha, beta, flags, prefetch, 0);
 }
 
 
 LIBXSMM_API libxsmm_gemm_descriptor* libxsmm_gemm_descriptor_init2(libxsmm_descriptor_blob* blob,
   libxsmm_gemm_precision iprec, libxsmm_gemm_precision oprec, libxsmm_blasint m, libxsmm_blasint n, libxsmm_blasint k,
   libxsmm_blasint lda, libxsmm_blasint ldb, libxsmm_blasint ldc, const void* alpha, const void* beta,
-  int flags, int prefetch)
+  int flags, int prefetch, unsigned int compression_pattern)
 {
   return libxsmm_gemm_descriptor_init3(blob, iprec, oprec, m, n, k, lda, ldb, ldc, alpha, beta, flags, prefetch,
-    NULL/*dalpha*/, NULL/*dbeta*/);
+    NULL/*dalpha*/, NULL/*dbeta*/, compression_pattern);
 }
 
 
 LIBXSMM_API libxsmm_gemm_descriptor* libxsmm_gemm_descriptor_init3(libxsmm_descriptor_blob* blob,
   libxsmm_gemm_precision iprec, libxsmm_gemm_precision oprec, libxsmm_blasint m, libxsmm_blasint n, libxsmm_blasint k,
   libxsmm_blasint lda, libxsmm_blasint ldb, libxsmm_blasint ldc, const void* alpha, const void* beta,
-  int flags, int prefetch, double* dalpha, double* dbeta)
+  int flags, int prefetch, double* dalpha, double* dbeta, unsigned int compression_pattern)
 {
   /* avoid warning about potentially uninitialized variable (initialize outside of control flow) */
   libxsmm_gemm_descriptor* result = NULL;
@@ -326,6 +326,7 @@ LIBXSMM_API libxsmm_gemm_descriptor* libxsmm_gemm_descriptor_init3(libxsmm_descr
       fprintf(stderr, "LIBXSMM ERROR: GEMM precision is not supported!\n");
     }
   }
+  result->compression_pattern = compression_pattern;
   return result;
 }
 

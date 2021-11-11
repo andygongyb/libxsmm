@@ -693,28 +693,28 @@ public:
     libxsmm_descriptor_blob blob;
     const libxsmm_gemm_descriptor *const desc = libxsmm_gemm_descriptor_init2(&blob,
       libxsmm_gemm_precision_enum<itype>::value, libxsmm_gemm_precision_enum<otype>::value, m, n, k, m, k, m,
-      NULL/*alpha*/, NULL/*beta*/, flags, libxsmm_get_gemm_xprefetch(NULL));
+      NULL/*alpha*/, NULL/*beta*/, flags, libxsmm_get_gemm_xprefetch(NULL), 0);
     m_function.xmm = (0 != desc ? libxsmm_xmmdispatch(desc).xmm : 0);
   }
   libxsmm_mmfunction(int flags, libxsmm_blasint m, libxsmm_blasint n, libxsmm_blasint k, int prefetch) {
     libxsmm_descriptor_blob blob;
     const libxsmm_gemm_descriptor *const desc = libxsmm_gemm_descriptor_init2(&blob,
       libxsmm_gemm_precision_enum<itype>::value, libxsmm_gemm_precision_enum<otype>::value, m, n, k, m, k, m,
-      NULL/*alpha*/, NULL/*beta*/, flags, libxsmm_get_gemm_prefetch(prefetch));
+      NULL/*alpha*/, NULL/*beta*/, flags, libxsmm_get_gemm_prefetch(prefetch), 0);
     m_function.xmm = (0 != desc ? libxsmm_xmmdispatch(desc).xmm : 0);
   }
   libxsmm_mmfunction(int flags, libxsmm_blasint m, libxsmm_blasint n, libxsmm_blasint k, otype alpha, otype beta) {
     libxsmm_descriptor_blob blob;
     const libxsmm_gemm_descriptor *const desc = libxsmm_gemm_descriptor_init2(&blob,
       libxsmm_gemm_precision_enum<itype>::value, libxsmm_gemm_precision_enum<otype>::value, m, n, k, m, k, m,
-      &alpha, &beta, flags, libxsmm_get_gemm_xprefetch(NULL));
+      &alpha, &beta, flags, libxsmm_get_gemm_xprefetch(NULL), 0);
     m_function.xmm = (0 != desc ? libxsmm_xmmdispatch(desc).xmm : 0);
   }
   libxsmm_mmfunction(int flags, libxsmm_blasint m, libxsmm_blasint n, libxsmm_blasint k, otype alpha, otype beta, int prefetch) {
     libxsmm_descriptor_blob blob;
     const libxsmm_gemm_descriptor *const desc = libxsmm_gemm_descriptor_init2(&blob,
       libxsmm_gemm_precision_enum<itype>::value, libxsmm_gemm_precision_enum<otype>::value, m, n, k, m, k, m,
-      &alpha, &beta, flags, libxsmm_get_gemm_prefetch(prefetch));
+      &alpha, &beta, flags, libxsmm_get_gemm_prefetch(prefetch), 0);
     m_function.xmm = (0 != desc ? libxsmm_xmmdispatch(desc).xmm : 0);
   }
   libxsmm_mmfunction(int flags, libxsmm_blasint m, libxsmm_blasint n, libxsmm_blasint k,
@@ -723,7 +723,7 @@ public:
     libxsmm_descriptor_blob blob;
     const libxsmm_gemm_descriptor *const desc = libxsmm_gemm_descriptor_init2(&blob,
       libxsmm_gemm_precision_enum<itype>::value, libxsmm_gemm_precision_enum<otype>::value, m, n, k, lda, ldb, ldc,
-      NULL/*alpha*/, NULL/*beta*/, flags, libxsmm_get_gemm_prefetch(prefetch));
+      NULL/*alpha*/, NULL/*beta*/, flags, libxsmm_get_gemm_prefetch(prefetch), 0);
     m_function.xmm = (0 != desc ? libxsmm_xmmdispatch(desc).xmm : 0);
   }
   libxsmm_mmfunction(int flags, libxsmm_blasint m, libxsmm_blasint n, libxsmm_blasint k,
@@ -732,7 +732,7 @@ public:
     libxsmm_descriptor_blob blob;
     const libxsmm_gemm_descriptor *const desc = libxsmm_gemm_descriptor_init2(&blob,
       libxsmm_gemm_precision_enum<itype>::value, libxsmm_gemm_precision_enum<otype>::value, m, n, k, lda, ldb, ldc,
-      &alpha, &beta, flags, libxsmm_get_gemm_xprefetch(NULL));
+      &alpha, &beta, flags, libxsmm_get_gemm_xprefetch(NULL), 0);
     m_function.xmm = (0 != desc ? libxsmm_xmmdispatch(desc).xmm : 0);
   }
   libxsmm_mmfunction(int flags, libxsmm_blasint m, libxsmm_blasint n, libxsmm_blasint k,
@@ -741,7 +741,16 @@ public:
     libxsmm_descriptor_blob blob;
     const libxsmm_gemm_descriptor *const desc = libxsmm_gemm_descriptor_init2(&blob,
       libxsmm_gemm_precision_enum<itype>::value, libxsmm_gemm_precision_enum<otype>::value, m, n, k, lda, ldb, ldc,
-      &alpha, &beta, flags, libxsmm_get_gemm_prefetch(prefetch));
+      &alpha, &beta, flags, libxsmm_get_gemm_prefetch(prefetch), 0);
+    m_function.xmm = (0 != desc ? libxsmm_xmmdispatch(desc).xmm : 0);
+  }
+  libxsmm_mmfunction(int flags, libxsmm_blasint m, libxsmm_blasint n, libxsmm_blasint k,
+    libxsmm_blasint lda, libxsmm_blasint ldb, libxsmm_blasint ldc, otype alpha, otype beta, int prefetch, unsigned int compression_pattern)
+  {
+    libxsmm_descriptor_blob blob;
+    const libxsmm_gemm_descriptor *const desc = libxsmm_gemm_descriptor_init2(&blob,
+      libxsmm_gemm_precision_enum<itype>::value, libxsmm_gemm_precision_enum<otype>::value, m, n, k, lda, ldb, ldc,
+      &alpha, &beta, flags, libxsmm_get_gemm_prefetch(prefetch), compression_pattern);
     m_function.xmm = (0 != desc ? libxsmm_xmmdispatch(desc).xmm : 0);
   }
 public:

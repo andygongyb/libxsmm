@@ -190,7 +190,7 @@ LIBXSMM_API_INTERN void libxsmm_generator_gemm_sse_avx_avx2_avx512_kernel( libxs
     unsigned int l_m_blocking = 0;
 
     /* open N loop */
-    libxsmm_generator_gemm_header_nloop( io_generated_code, &l_loop_label_tracker, &l_gp_reg_mapping, &l_micro_kernel_config, l_n_done, l_n_blocking );
+    libxsmm_generator_gemm_header_nloop( io_generated_code, &l_loop_label_tracker, &l_gp_reg_mapping, &l_micro_kernel_config, i_xgemm_desc, l_n_done, l_n_blocking );
 
     /* advance N */
     l_n_done += l_n_N[l_n_count];

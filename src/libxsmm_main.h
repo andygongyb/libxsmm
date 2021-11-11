@@ -244,6 +244,8 @@ LIBXSMM_EXTERN_C LIBXSMM_PACKED(struct LIBXSMM_RETARGETABLE) libxsmm_gemm_descri
   unsigned short meltw_flags;
   /** operation specifier */
   unsigned char meltw_operation;
+  /** matrix C static compression pattern */
+  unsigned int compression_pattern;
 };
 
 /** Packed structure storing the mateltw argument description. */

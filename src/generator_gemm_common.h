@@ -72,6 +72,7 @@ void libxsmm_generator_gemm_header_nloop( libxsmm_generated_code*             io
                                            libxsmm_loop_label_tracker*        io_loop_label_tracker,
                                            const libxsmm_gp_reg_mapping*      i_gp_reg_mapping,
                                            const libxsmm_micro_kernel_config* i_micro_kernel_config,
+                                           const libxsmm_gemm_descriptor*     i_xgemm_desc,
                                            const unsigned int                 i_n_init,
                                            const unsigned int                 i_n_blocking );
 
